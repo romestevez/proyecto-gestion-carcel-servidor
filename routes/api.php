@@ -13,52 +13,57 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::post('login', [\App\Http\Controllers\Users::class, 'login']);
 
-
-//Trabajadores
 Route::post('createUser', [\App\Http\Controllers\Users::class, 'createUser']);
+Route::middleware('auth:sanctum')->group(function () {
+//Trabajadores
+   
 
-Route::post('update/user/{id}', [\App\Http\Controllers\Users::class, 'updateUser']);
+    Route::post('update/user/{id}', [\App\Http\Controllers\Users::class, 'updateUser']);
 
-Route::post('user/{id}', [\App\Http\Controllers\Users::class, 'showUser']);
+    Route::post('user/{id}', [\App\Http\Controllers\Users::class, 'showUser'])->middleware('auth');
 
-Route::delete('delete/user/{id}', [\App\Http\Controllers\Users::class, 'delete']);
-
-//Reclusos
-Route::post('createRecluso', [\App\Http\Controllers\ReclusoController::class, 'createRecluso']);
-
-Route::post('update/recluso/{id}', [\App\Http\Controllers\ReclusoController::class, 'updateRecluso']);
-
-Route::post('recluso/{id}', [\App\Http\Controllers\ReclusoController::class, 'showRecluso']);
-
-Route::delete('delete/recluso/{id}', [\App\Http\Controllers\ReclusoController::class, 'deleteRecluso']);
+    Route::delete('delete/user/{id}', [\App\Http\Controllers\Users::class, 'delete']);
 
 
 
-//Celdas
-Route::post('createCelda', [\App\Http\Controllers\CeldasController::class, 'createCelda']);
+    //Reclusos
+    Route::post('createRecluso', [\App\Http\Controllers\ReclusoController::class, 'createRecluso']);
 
-Route::post('update/celda/{id}', [\App\Http\Controllers\CeldasController::class, 'updateCelda']);
+    Route::post('update/recluso/{id}', [\App\Http\Controllers\ReclusoController::class, 'updateRecluso']);
 
-Route::post('celda/{id}', [\App\Http\Controllers\CeldasController::class, 'showCelda']);
+    Route::post('recluso/{id}', [\App\Http\Controllers\ReclusoController::class, 'showRecluso']);
 
-Route::delete('delete/celda/{id}', [\App\Http\Controllers\CeldasController::class, 'deleteCelda']);
+    Route::delete('delete/recluso/{id}', [\App\Http\Controllers\ReclusoController::class, 'deleteRecluso']);
 
 
-//Modulos
-Route::post('createModulo', [\App\Http\Controllers\ModulosController::class, 'createModulo']);
 
-Route::post('update/modulo/{id}', [\App\Http\Controllers\ModulosController::class, 'updateModulo']);
+    //Celdas
+    Route::post('createCelda', [\App\Http\Controllers\CeldasController::class, 'createCelda']);
 
-Route::post('modulo/{id}', [\App\Http\Controllers\ModulosController::class, 'showModulo']);
+    Route::post('update/celda/{id}', [\App\Http\Controllers\CeldasController::class, 'updateCelda']);
 
-Route::delete('delete/modulo/{id}', [\App\Http\Controllers\ModulosController::class, 'deleteModulo']);
+    Route::post('celda/{id}', [\App\Http\Controllers\CeldasController::class, 'showCelda']);
 
-//Historial
-Route::post('createHistorial', [\App\Http\Controllers\HistorialController::class, 'createHistorial']);
+    Route::delete('delete/celda/{id}', [\App\Http\Controllers\CeldasController::class, 'deleteCelda']);
 
-Route::post('update/historial/{id}', [\App\Http\Controllers\HistorialController::class, 'updateHistorial']);
 
-Route::post('historial/{id}', [\App\Http\Controllers\HistorialController::class, 'showHistorial']);
+    //Modulos
+    Route::post('createModulo', [\App\Http\Controllers\ModulosController::class, 'createModulo']);
 
-Route::delete('delete/historial/{id}', [\App\Http\Controllers\HistorialController::class, 'deleteHistorial']);
+    Route::post('update/modulo/{id}', [\App\Http\Controllers\ModulosController::class, 'updateModulo']);
+
+    Route::post('modulo/{id}', [\App\Http\Controllers\ModulosController::class, 'showModulo']);
+
+    Route::delete('delete/modulo/{id}', [\App\Http\Controllers\ModulosController::class, 'deleteModulo']);
+
+    //Historial
+    Route::post('createHistorial', [\App\Http\Controllers\HistorialController::class, 'createHistorial']);
+
+    Route::post('update/historial/{id}', [\App\Http\Controllers\HistorialController::class, 'updateHistorial']);
+
+    Route::post('historial/{id}', [\App\Http\Controllers\HistorialController::class, 'showHistorial']);
+
+    Route::delete('delete/historial/{id}', [\App\Http\Controllers\HistorialController::class, 'deleteHistorial']);
+});

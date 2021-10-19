@@ -27,6 +27,7 @@ class Recluso extends Model
         'edad',
         'dni',
         'descripcion',
+        'foto',
         'id_celda',
     ];
 

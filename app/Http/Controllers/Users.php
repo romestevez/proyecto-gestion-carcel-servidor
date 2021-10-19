@@ -33,7 +33,17 @@ class Users extends Controller
             'rol' => $request->input('rol'),
         ]);
 
-        return response()->json('ok', 200);
+        Auth::attempt($request->only('email', 'password'));
+
+        $user = Auth::user();
+
+        $token = $user->createToken('token')->plainTextToken;
+
+        $cookie = cookie('jwt', $token, 60 * 24); // 1 day
+
+        return response([
+            Auth::user()
+        ])->withCookie($cookie);
     }
 
     public function updateUser($id, Request $request)
@@ -72,5 +82,33 @@ class Users extends Controller
         return response(['message' => 'Success'], 200);
     }
 
+
+    public function login(Request $request)
+    {
+        if (!Auth::attempt($request->only('email', 'password'))) {
+            return response([
+                'message' => 'Invalid credentials!'
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+
+        $user = Auth::user();
+
+        $token = $user->createToken('token')->plainTextToken;
+
+        $cookie = cookie('jwt', $token, 60 * 24); // 1 day
+
+        return response([
+            Auth::user()
+        ])->withCookie($cookie);
+    }
+
+    public function logout()
+    {
+        $cookie = Cookie::forget('jwt');
+
+        return response([
+            'message' => 'Success'
+        ])->withCookie($cookie);
+    }
 
 }

@@ -17,11 +17,11 @@ class CreateReclusosTable extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('apellido');
-            $table->string('dni');
-            $table->text('descripcion');
+            $table->string('dni')->unique();
+            $table->text('descripcion', 500)->nullable();
             $table->Integer('edad');
             $table->foreignId('id_celda')->constrained('celdas');
-            $table->string('foto');
+            $table->string('imagen')->nullable();
             $table->timestamps();
         });
     }

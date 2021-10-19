@@ -14,12 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::post('login', [\App\Http\Controllers\Users::class, 'login']);
-
 Route::post('createUser', [\App\Http\Controllers\Users::class, 'createUser']);
+
 Route::middleware('auth:sanctum')->group(function () {
 //Trabajadores
    
 
+    Route::post('createUser', [\App\Http\Controllers\Users::class, 'createUser']);
+    
     Route::post('update/user/{id}', [\App\Http\Controllers\Users::class, 'updateUser']);
 
     Route::post('user/{id}', [\App\Http\Controllers\Users::class, 'showUser'])->middleware('auth');

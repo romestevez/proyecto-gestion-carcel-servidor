@@ -17,7 +17,10 @@ class Users extends Controller
 
 
 
-
+    public function user()
+    {
+        return Auth::user();
+    }
 
     public function createUser(Request $request)
     {   

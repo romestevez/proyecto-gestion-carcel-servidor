@@ -15,12 +15,11 @@ use Illuminate\Support\Facades\Route;
 */
 Route::post('login', [\App\Http\Controllers\Users::class, 'login']);
 Route::post('createUser', [\App\Http\Controllers\Users::class, 'createUser']);
+Route::get('user', [\App\Http\Controllers\Users::class, 'user']);
 
 Route::middleware('auth:sanctum')->group(function () {
 //Trabajadores
    
-
-    Route::post('createUser', [\App\Http\Controllers\Users::class, 'createUser']);
     
     Route::post('update/user/{id}', [\App\Http\Controllers\Users::class, 'updateUser']);
 
@@ -28,7 +27,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::delete('delete/user/{id}', [\App\Http\Controllers\Users::class, 'delete']);
 
-
+});
 
     //Reclusos
     Route::post('createRecluso', [\App\Http\Controllers\ReclusoController::class, 'createRecluso']);
@@ -68,4 +67,3 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('historial/{id}', [\App\Http\Controllers\HistorialController::class, 'showHistorial']);
 
     Route::delete('delete/historial/{id}', [\App\Http\Controllers\HistorialController::class, 'deleteHistorial']);
-});

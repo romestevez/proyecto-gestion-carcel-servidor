@@ -19,6 +19,7 @@ class Users extends Controller
 
     public function user()
     {
+        dd(User::first());
         return Auth::user();
     }
 

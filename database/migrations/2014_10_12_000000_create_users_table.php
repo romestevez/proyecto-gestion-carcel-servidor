@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('dni');
             $table->integer('edad');
             $table->integer('n_tlf');
-            $table->enum('rol', ['administrador', 'guardia', 'alcaide', 'enfermero', 'cocinero', 'limpiador']);
+            $table->enum('rol', ['administrador', 'guardia', 'alcaide', 'enfermero']);
             $table->rememberToken();
             $table->timestamps();
         });

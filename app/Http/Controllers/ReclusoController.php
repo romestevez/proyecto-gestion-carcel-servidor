@@ -16,7 +16,7 @@ class ReclusoController extends Controller
     public function createRecluso(Request $request)
     {   
 
-        $image_path = $request->file('imagen');
+        $image_path = $request->file('foto');
         if($image_path){
             $image_path_name = time().$image_path->getClientOriginalName();
             Storage::disk('reclusos')->put($image_path_name, File::get($image_path));
@@ -55,6 +55,20 @@ class ReclusoController extends Controller
             , 'foto' => $foto, 'descripcion' => $descripcion, 'dni' => $dni, 'id_celda' => $id_celda]);
 
         return response()->json($recluso, 200);
+    }
+
+
+    public function showAllReclusos(Request $request)
+    {
+        $reclusos = Recluso::query();
+
+        if ($request->has('q')) {
+            $reclusos = $reclusos->where('nombre', 'LIKE', "%{$request->get('q')}%");
+        }
+
+        $reclusos = $reclusos->get();
+
+        return response()->json($reclusos, 200);
     }
 
     public function showRecluso($id)

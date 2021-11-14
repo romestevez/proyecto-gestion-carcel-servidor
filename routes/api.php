@@ -15,37 +15,42 @@ use Illuminate\Support\Facades\Route;
 */
 Route::post('login', [\App\Http\Controllers\Users::class, 'login']);
 Route::post('createUser', [\App\Http\Controllers\Users::class, 'createUser']);
-Route::get('user', [\App\Http\Controllers\Users::class, 'user']);
 
 Route::middleware('auth:sanctum')->group(function () {
-//Trabajadores
-   
     
-    Route::post('update/user/{id}', [\App\Http\Controllers\Users::class, 'updateUser']);
 
-    Route::post('user/{id}', [\App\Http\Controllers\Users::class, 'showUser'])->middleware('auth');
 
-    Route::delete('delete/user/{id}', [\App\Http\Controllers\Users::class, 'delete']);
+    //Trabajadores
+    Route::get('user', [\App\Http\Controllers\Users::class, 'user']);
+    Route::put('update/user/{id}', [\App\Http\Controllers\Users::class, 'updateUser']);
+    Route::post('logout', [\App\Http\Controllers\Users::class, 'logout']);
+    Route::get('user/{id}', [\App\Http\Controllers\Users::class, 'showUser']);
+    Route::get('mostrarusers', [\App\Http\Controllers\Users::class, 'showAllUser']);
+    Route::post('user/info', [\App\Http\Controllers\Users::class, 'userInfo']);
 
-});
+    Route::delete('delete/user/{id}', [\App\Http\Controllers\Users::class, 'deleteUser']);
+
+
 
     //Reclusos
     Route::post('createRecluso', [\App\Http\Controllers\ReclusoController::class, 'createRecluso']);
 
-    Route::post('update/recluso/{id}', [\App\Http\Controllers\ReclusoController::class, 'updateRecluso']);
+    Route::put('update/recluso/{id}', [\App\Http\Controllers\ReclusoController::class, 'updateRecluso']);
 
-    Route::post('recluso/{id}', [\App\Http\Controllers\ReclusoController::class, 'showRecluso']);
+    Route::get('recluso/{id}', [\App\Http\Controllers\ReclusoController::class, 'showRecluso']);
 
     Route::delete('delete/recluso/{id}', [\App\Http\Controllers\ReclusoController::class, 'deleteRecluso']);
+    
+    Route::get('mostrarreclusos', [\App\Http\Controllers\ReclusoController::class, 'showAllReclusos']);
 
 
 
     //Celdas
     Route::post('createCelda', [\App\Http\Controllers\CeldasController::class, 'createCelda']);
 
-    Route::post('update/celda/{id}', [\App\Http\Controllers\CeldasController::class, 'updateCelda']);
+    Route::put('update/celda/{id}', [\App\Http\Controllers\CeldasController::class, 'updateCelda']);
 
-    Route::post('celda/{id}', [\App\Http\Controllers\CeldasController::class, 'showCelda']);
+    Route::get('celda/{id}', [\App\Http\Controllers\CeldasController::class, 'showCelda']);
 
     Route::delete('delete/celda/{id}', [\App\Http\Controllers\CeldasController::class, 'deleteCelda']);
 
@@ -53,17 +58,18 @@ Route::middleware('auth:sanctum')->group(function () {
     //Modulos
     Route::post('createModulo', [\App\Http\Controllers\ModulosController::class, 'createModulo']);
 
-    Route::post('update/modulo/{id}', [\App\Http\Controllers\ModulosController::class, 'updateModulo']);
+    Route::put('update/modulo/{id}', [\App\Http\Controllers\ModulosController::class, 'updateModulo']);
 
-    Route::post('modulo/{id}', [\App\Http\Controllers\ModulosController::class, 'showModulo']);
+    Route::get('modulo/{id}', [\App\Http\Controllers\ModulosController::class, 'showModulo']);
 
     Route::delete('delete/modulo/{id}', [\App\Http\Controllers\ModulosController::class, 'deleteModulo']);
 
     //Historial
     Route::post('createHistorial', [\App\Http\Controllers\HistorialController::class, 'createHistorial']);
 
-    Route::post('update/historial/{id}', [\App\Http\Controllers\HistorialController::class, 'updateHistorial']);
+    Route::put('update/historial/{id}', [\App\Http\Controllers\HistorialController::class, 'updateHistorial']);
 
-    Route::post('historial/{id}', [\App\Http\Controllers\HistorialController::class, 'showHistorial']);
+    Route::get('historial/{id}', [\App\Http\Controllers\HistorialController::class, 'showHistorial']);
 
     Route::delete('delete/historial/{id}', [\App\Http\Controllers\HistorialController::class, 'deleteHistorial']);
+});

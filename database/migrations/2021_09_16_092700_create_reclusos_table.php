@@ -20,8 +20,8 @@ class CreateReclusosTable extends Migration
             $table->string('dni')->unique();
             $table->text('descripcion', 500)->nullable();
             $table->Integer('edad');
-            $table->foreignId('id_celda')->constrained('celdas');
-            $table->string('imagen')->nullable();
+            $table->foreignId('id_celda')->constrained('celdas')->nullable();
+            $table->string('foto')->nullable();
             $table->timestamps();
         });
     }

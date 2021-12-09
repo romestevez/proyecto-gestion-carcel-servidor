@@ -53,22 +53,10 @@ class Users extends Controller
     public function updateUser($id, Request $request)
     {   
       
-        $nombre = $request->input('nombre');
-        $apellido = $request->input('apellido');
-        $edad = $request->input('edad');
-        $email = $request->input('email');
-        $n_tlf = $request->input('n_tlf');
-        $dni = $request->input('dni');
-        $rol = $request->input('rol');
-        $password = $request->input('password');
-
+        $data = $request->all();
         $user = User::find($id);
-
-        $user->update(['nombre' => $nombre, 'apellido' => $apellido, 'edad' => $edad
-            , 'email' => $email, 'n_tlf' => $n_tlf, 'dni' => $dni, 'rol' => $rol
-            , 'password' => Hash::make($password)]);
-
-        return response()->json($user, 200);
+        $user->update($data);
+        return response()->json($data, 200);
     }
 
     public function showUser($id)
@@ -92,13 +80,12 @@ class Users extends Controller
 
     public function showAllUser(Request $request)
     {
-        $users = User::query();
 
         if ($request->has('q')) {
-            $users = $users->where('nombre', 'LIKE', "%{$request->get('q')}%");
+            $users = User::where('nombre', 'LIKE', "%{$request->get('q')}%")->paginate(5); 
+        } else {
+            $users = User::paginate(2);
         }
-
-        $users = $users->get();
 
         return response()->json($users, 200);
     }
@@ -110,9 +97,6 @@ class Users extends Controller
         return response(['message' => 'Success'], 200);
     }
 
-   
-
-
     public function login(Request $request)
     {
         if (!Auth::attempt($request->only('email', 'password'))) {
@@ -120,12 +104,8 @@ class Users extends Controller
                 'message' => 'Invalid credentials!'
             ], Response::HTTP_UNAUTHORIZED);
         }
-
         $user = Auth::user();
-
         $token = $user->createToken('token')->plainTextToken;
-        // echo 'hola'.$token;
-        // die();
         $cookie = cookie('jwt', $token, 60 * 24); // 1 day
 
         return response([
@@ -134,14 +114,13 @@ class Users extends Controller
         ])->withCookie($cookie);
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
+        $request->user()->tokens()->delete();
         $cookie = Cookie::forget('jwt');
-
         return response([
             'message' => 'Success'
-        ])->withCookie($cookie);
+        ]);
     }
 
 }
-// quitar logout/ ponerlo en el front

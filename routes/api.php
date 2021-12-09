@@ -15,15 +15,15 @@ use Illuminate\Support\Facades\Route;
 */
 Route::post('login', [\App\Http\Controllers\Users::class, 'login']);
 Route::post('createUser', [\App\Http\Controllers\Users::class, 'createUser']);
-
 Route::middleware('auth:sanctum')->group(function () {
     
 
 
     //Trabajadores
+    
     Route::get('user', [\App\Http\Controllers\Users::class, 'user']);
     Route::put('update/user/{id}', [\App\Http\Controllers\Users::class, 'updateUser']);
-    Route::post('logout', [\App\Http\Controllers\Users::class, 'logout']);
+    Route::get('logout', [\App\Http\Controllers\Users::class, 'logout']);
     Route::get('user/{id}', [\App\Http\Controllers\Users::class, 'showUser']);
     Route::get('mostrarusers', [\App\Http\Controllers\Users::class, 'showAllUser']);
     Route::post('user/info', [\App\Http\Controllers\Users::class, 'userInfo']);

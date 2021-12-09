@@ -41,32 +41,23 @@ class ReclusoController extends Controller
     public function updateRecluso($id, Request $request)
     {   
       
-        $nombre = $request->input('nombre');
-        $apellido = $request->input('apellido');
-        $edad = $request->input('edad');
-        $foto = $request->input('foto');
-        $descripcion = $request->input('descripcion');
-        $dni = $request->input('dni');
-        $id_celda = $request->input('id_celda');
+        $data = $request->all();
 
         $recluso = Recluso::find($id);
+        $recluso->update($data);
 
-        $recluso->update(['nombre' => $nombre, 'apellido' => $apellido, 'edad' => $edad
-            , 'foto' => $foto, 'descripcion' => $descripcion, 'dni' => $dni, 'id_celda' => $id_celda]);
-
-        return response()->json($recluso, 200);
+        return response()->json($data, 200);
     }
 
 
     public function showAllReclusos(Request $request)
     {
-        $reclusos = Recluso::query();
 
         if ($request->has('q')) {
-            $reclusos = $reclusos->where('nombre', 'LIKE', "%{$request->get('q')}%");
+            $reclusos = Recluso::where('nombre', 'LIKE', "%{$request->get('q')}%")->paginate(5); 
+        } else {
+            $reclusos = Recluso::paginate(5);
         }
-
-        $reclusos = $reclusos->get();
 
         return response()->json($reclusos, 200);
     }
